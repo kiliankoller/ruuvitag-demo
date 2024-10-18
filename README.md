@@ -38,35 +38,14 @@ This should show a device **hci0** as **UP RUNNING** and the **LMP Version** sho
 ### Installing Docker and Docker Compose
 Docker can be installed with:
 
-```shel
-curl -sSL https://get.docker.com | sh
-```
-
-And give the `pi` user access to Docker by adding it to the `docker` group:
-
-```shell
-sudo usermod pi -aG docker
-```
-
-Log out and then log in again, so the group permissions are applied to your session.
-
-Then install Python's pip package manager:
-
-```shell
-sudo apt install python3-pip
-```
-
-And install Docker Compose:
-
-```shell
-sudo pip3 install docker-compose
-```
+https://github.com/slowrunner/wali_pi5/blob/main/configs/docker/1_setup_docker_apt_repo.sh
+https://github.com/slowrunner/wali_pi5/blob/main/configs/docker/2_install_docker_pkgs.sh
 
 ## Installation
 Clone the repository (you may have to `sudo apt install git` first) and enter the directory:
 
 ```shell
-git clone https://github.com/koenvervloesem/ruuvitag-demo.git
+git clone https://github.com/kiliankoller/ruuvitag-demo.git
 cd ruuvitag-demo
 ```
 
@@ -91,7 +70,7 @@ The Node-RED flow and Grafana dashboard suppose that you have four tags, called 
 Starting the demo is easy, as it's using Docker Compose:
 
 ```shell
-docker-compose up -d
+docker compose up -d
 ```
 
 This starts seven Docker containers:
@@ -115,7 +94,7 @@ You have access to:
 If you have a Waveshare 2.7 inch three-colour e-Paper HAT, you can use this demo in combination with the [RuuviTag ePaper](https://github.com/koenvervloesem/ruuvitag-epaper) project on a Raspberry Pi:
 
   * Build the Docker container of that project.
-  * Start this container together with the containers of the RuuviTag Demo: `docker-compose up -f docker-compose-epaper.yml up -d`.
+  * Start this container together with the containers of the RuuviTag Demo: `docker compose up -f docker compose-epaper.yml up -d`.
 
 This shows the temperature and humidity measurements of the four configured RuuviTag sensors on the display, as well as the date, time and IP address. The latter is a nice way to know which IP address you have to log into to access the dashboards.
 
@@ -124,7 +103,7 @@ This is purely a demo of how you can process RuuviTag sensor measurements, so th
 
 The following default passwords are configured after installation:
 
-  * Node-RED dashboard: username **admin** and password **password**. To change this, run `docker exec -ti node-red /usr/local/bin/node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" your-password-here` with your new password instead of `your-password-here` and paste the output string in the line `password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",` after the line `username: "admin",` in the file `node-red/settings.js`. After this, restart Node-RED with `docker-compose restart node-red`.
+  * Node-RED dashboard: username **admin** and password **password**. To change this, run `docker exec -ti node-red /usr/local/bin/node -e "console.log(require('bcryptjs').hashSync(process.argv[1], 8));" your-password-here` with your new password instead of `your-password-here` and paste the output string in the line `password: "$2a$08$zZWtXTja0fB1pzD4sHCMyOCMYz2Z6dNbM6tl8sJogENOMcxWV9DN.",` after the line `username: "admin",` in the file `node-red/settings.js`. After this, restart Node-RED with `docker compose restart node-red`.
   * Grafana: username **admin** and password **admin**. After the first login, you're asked to choose another password.
 
 If you want to know more about securing Mosquitto and Node-RED, please consult my book [Control Your Home with Raspberry Pi: Secure, Modular, Open-Source and Self-Sufficient](https://koen.vervloesem.eu/books/control-your-home-with-raspberry-pi/) and the accompanying GitHub repository [koenvervloesem/raspberry-pi-home-automation](https://github.com/koenvervloesem/raspberry-pi-home-automation).
@@ -133,13 +112,13 @@ If you want to know more about securing Mosquitto and Node-RED, please consult m
 If you want to stop the demo, just run:
 
 ```shell
-docker-compose down
+docker compose down
 ```
 
 If you run the extra demo with the e-Paper HAT, stop the demo like this:
 
 ```shell
-docker-compose -f docker-compose-epaper.yml down
+docker compose -f docker compose-epaper.yml down
 ```
 
 ## Architecture
