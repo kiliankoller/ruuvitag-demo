@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   mosquitto:
     image: eclipse-mosquitto
@@ -25,7 +23,7 @@ services:
     container_name: bt-mqtt-gateway
     restart: always
     volumes:
-      - ./bt-mqtt-gateway/config.yaml:/config.yaml
+      - ./bt-mqtt-gateway/config.yaml:/application/config.yaml
     # These capabilities are needed for Bluetooth
     cap_add:
       - NET_ADMIN
@@ -60,7 +58,7 @@ services:
       - influxdb
       - mosquitto
   influxdb:
-    image: influxdb
+    image: arm32v7/influxdb
     container_name: influxdb
     restart: always
     volumes:
